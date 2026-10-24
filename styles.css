@@ -138,6 +138,14 @@ button { font: inherit; }
   box-shadow: 0 20px 70px rgba(69, 43, 75, .28);
 }
 .yes-dialog::backdrop { background: rgba(71, 45, 79, .38); backdrop-filter: blur(4px); }
+.celebration-burst { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.burst-heart {
+  position: absolute;
+  color: var(--heart-color);
+  font-size: var(--heart-size);
+  line-height: 1;
+  animation: heart-burst 3.4s linear forwards;
+}
 .celebration-heart { display: block; margin-bottom: 9px; color: #e77789; font-size: 35px; animation: heartbeat 1s ease-in-out infinite; }
 .dialog-eyebrow { margin: 0 0 9px; color: #805775; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .yes-dialog h2 { margin: 0 0 11px; font: 600 36px var(--serif); }
@@ -146,6 +154,22 @@ button { font: inherit; }
 .close-dialog:hover { background: var(--yes-dark); }
 
 @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@keyframes heart-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.2) rotate(0deg);
+    animation-timing-function: cubic-bezier(.16, .72, .28, 1);
+  }
+  10% { opacity: 1; }
+  38% {
+    transform: translate(calc(-50% + var(--heart-x)), calc(-50% + var(--heart-y))) scale(1.1) rotate(var(--heart-rotation));
+    animation-timing-function: cubic-bezier(.55, 0, 1, .45);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--heart-x)), calc(-50% + var(--heart-y) + var(--heart-fall))) scale(.85) rotate(calc(var(--heart-rotation) + 180deg));
+  }
+}
 @media (max-width: 520px) {
   .proposal { padding: 25px 18px; }
   .proposal-content { max-width: 360px; }
@@ -159,4 +183,7 @@ button { font: inherit; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .burst-heart {
+    animation-duration: 3.4s !important;
+  }
 }
